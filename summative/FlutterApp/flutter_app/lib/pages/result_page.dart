@@ -1,52 +1,34 @@
-// lib/pages/result_page.dart (Enhanced Version)
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 
 class EnhancedResultPage extends StatelessWidget {
   final SalaryPredictionResponse response;
 
-  const EnhancedResultPage({super.key, required this.response});
+  const EnhancedResultPage({Key? key, required this.response}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.green.shade50,
-              Colors.blue.shade50,
-              Colors.indigo.shade50,
+      appBar: AppBar(
+        title: Text('Salary Prediction Result'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildHeader(context),
+              SizedBox(height: 30),
+              _buildResultCard(context),
+              SizedBox(height: 20),
+              _buildInputDetailsCard(context),
+              SizedBox(height: 30),
+              _buildBackButton(context),
             ],
-          ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                // Header
-                _buildHeader(context),
-                SizedBox(height: 30),
-                
-                // Main Salary Card
-                _buildSalaryCard(),
-                SizedBox(height: 25),
-                
-                // Details Card
-                _buildDetailsCard(),
-                SizedBox(height: 25),
-                
-                // Confidence Score
-                _buildConfidenceCard(),
-                SizedBox(height: 30),
-                
-                // Action Buttons
-                _buildActionButtons(context),
-              ],
-            ),
           ),
         ),
       ),
@@ -54,436 +36,182 @@ class EnhancedResultPage extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.arrow_back_ios, color: Colors.indigo.shade600),
-              ),
-              Expanded(
-                child: Text(
-                  'Salary Prediction Result',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.indigo.shade800,
-                  ),
-                ),
-              ),
-              SizedBox(width: 48), // Balance the back button
-            ],
-          ),
-          SizedBox(height: 10),
-          Text(
-            'AI-powered analysis complete',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey.shade600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSalaryCard() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(30),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.green.shade400,
-            Colors.green.shade600,
-          ],
+    return FadeTransition(
+      opacity: Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: ModalRoute.of(context)!.animation!,
+          curve: Curves.easeInOut,
         ),
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.green.withOpacity(0.3),
-            blurRadius: 20,
-            offset: Offset(0, 10),
-          ),
-        ],
       ),
       child: Column(
         children: [
           Icon(
-            Icons.attach_money,
+            Icons.monetization_on,
             size: 60,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
           ),
           SizedBox(height: 15),
           Text(
-            'Predicted Salary',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white.withOpacity(0.9),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            '\$${_formatSalary(response.predictedSalary)}',
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 5),
-          Text(
-            'per year',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetailsCard() {
-    final inputData = response.inputData;
-    
-    return Container(
-      padding: EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 15,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.person, color: Colors.indigo.shade600, size: 24),
-              SizedBox(width: 12),
-              Text(
-                'Profile Summary',
-                style: TextStyle(
-                  fontSize: 20,
+            'Your Predicted Salary',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.indigo.shade800,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
-              ),
-            ],
+            textAlign: TextAlign.center,
           ),
-          SizedBox(height: 20),
-          _buildDetailRow('Name', inputData['name'], Icons.badge_outlined),
-          _buildDetailRow('Education', inputData['education'], Icons.school_outlined),
-          _buildDetailRow('Experience', '${inputData['years_of_experience']} years', Icons.work_outline),
-          _buildDetailRow('Job Title', inputData['job_title'], Icons.business_center_outlined),
-          _buildDetailRow('Location', inputData['location'], Icons.location_on_outlined),
-          _buildDetailRow('Age', '${inputData['age']} years', Icons.cake_outlined),
-          _buildDetailRow('Gender', inputData['gender'], Icons.people_outline),
         ],
       ),
     );
   }
 
-  Widget _buildDetailRow(String label, String value, IconData icon) {
+  Widget _buildResultCard(BuildContext context) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  child: Icon(
+                    Icons.account_balance_wallet,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 24,
+                  ),
+                ),
+                SizedBox(width: 12),
+                Text(
+                  'Prediction Result',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Tooltip(
+              message: 'Predicted annual salary in USD',
+              child: Text(
+                '\$${response.predictedSalary.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
+            ),
+            SizedBox(height: 16),
+            if (response.confidenceScore != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Confidence: ${(response.confidenceScore! * 100).toStringAsFixed(1)}%',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                  SizedBox(height: 8),
+                  LinearProgressIndicator(
+                    value: response.confidenceScore!,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                    minHeight: 8,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputDetailsCard(BuildContext context) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  child: Icon(
+                    Icons.info,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 24,
+                  ),
+                ),
+                SizedBox(width: 12),
+                Text(
+                  'Input Details',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            _buildDetailRow(context, 'Name', response.inputData['name']),
+            _buildDetailRow(context, 'Age', response.inputData['age'].toString()),
+            _buildDetailRow(context, 'Gender', response.inputData['gender']),
+            _buildDetailRow(context, 'Job Title', response.inputData['job_title']),
+            _buildDetailRow(context, 'Education', response.inputData['education']),
+            _buildDetailRow(context, 'Experience', '${response.inputData['years_of_experience']} years'),
+            _buildDetailRow(context, 'Location', response.inputData['location']),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.indigo.shade50,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, size: 16, color: Colors.indigo.shade600),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
           ),
-          SizedBox(width: 12),
-          Expanded(
-            flex: 2,
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
+          Flexible(
             child: Text(
               value,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade800,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildConfidenceCard() {
-    final confidence = response.confidenceScore ?? 0.0;
-    final confidencePercentage = (confidence * 100).round();
-    
-    return Container(
-      padding: EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 15,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Icon(Icons.psychology, color: Colors.purple.shade600, size: 24),
-              SizedBox(width: 12),
-              Text(
-                'AI Confidence Level',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple.shade800,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$confidencePercentage%',
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: _getConfidenceColor(confidence),
-                      ),
-                    ),
-                    Text(
-                      _getConfidenceText(confidence),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: 80,
-                height: 80,
-                child: CircularProgressIndicator(
-                  value: confidence,
-                  strokeWidth: 8,
-                  backgroundColor: Colors.grey.shade200,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    _getConfidenceColor(confidence),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
-                ),
-              ),
-            ],
+              textAlign: TextAlign.right,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
-    return Column(
-      children: [
-        // Predict Again Button
-        SizedBox(
-          width: double.infinity,
-          height: 55,
-          child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.refresh, size: 24),
-                SizedBox(width: 12),
-                Text(
-                  'Make Another Prediction',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.indigo.shade600,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              elevation: 8,
-              shadowColor: Colors.indigo.withOpacity(0.3),
-            ),
-          ),
-        ),
-        SizedBox(height: 15),
-        
-        // Share Results Button
-        SizedBox(
-          width: double.infinity,
-          height: 55,
-          child: OutlinedButton(
-            onPressed: () {
-              _shareResults(context);
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.share, size: 24),
-                SizedBox(width: 12),
-                Text(
-                  'Share Results',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.indigo.shade600,
-              side: BorderSide(color: Colors.indigo.shade600, width: 2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Color _getConfidenceColor(double confidence) {
-    if (confidence >= 0.8) return Colors.green.shade600;
-    if (confidence >= 0.6) return Colors.orange.shade600;
-    return Colors.red.shade600;
-  }
-
-  String _getConfidenceText(double confidence) {
-    if (confidence >= 0.8) return 'High confidence prediction';
-    if (confidence >= 0.6) return 'Moderate confidence prediction';
-    return 'Lower confidence prediction';
-  }
-
-  String _formatSalary(double salary) {
-    if (salary >= 1000000) {
-      return '${(salary / 1000000).toStringAsFixed(1)}M';
-    } else if (salary >= 1000) {
-      return '${(salary / 1000).toStringAsFixed(0)}K';
-    }
-    return salary.toStringAsFixed(0);
-  }
-
-  void _shareResults(BuildContext context) {
-    final inputData = response.inputData;
-    final shareText = '''
-🎯 AI Salary Prediction Results
-
-💰 Predicted Salary: \${_formatSalary(response.predictedSalary)}/year
-👤 Profile: ${inputData['name']}
-🎓 Education: ${inputData['education']}
-💼 Job: ${inputData['job_title']}
-📍 Location: ${inputData['location']}
-⏱️ Experience: ${inputData['years_of_experience']} years
-🎂 Age: ${inputData['age']}
-🤖 AI Confidence: ${((response.confidenceScore ?? 0) * 100).round()}%
-
-Generated by AI Salary Predictor
-    ''';
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Share Results'),
-        content: SingleChildScrollView(
-          child: Text(shareText),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Close'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Here you would implement actual sharing functionality
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Results copied to clipboard!'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            },
-            child: Text('Copy'),
-          ),
+  Widget _buildBackButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => Navigator.pop(context),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.arrow_back),
+          SizedBox(width: 12),
+          Text('Back to Input'),
         ],
-      ),
-    );
-  }
-}
-
-// Keep the original simple ResultPage for backward compatibility
-class ResultPage extends StatelessWidget {
-  final double predictedSalary;
-
-  const ResultPage({super.key, required this.predictedSalary});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Prediction Result")),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Predicted Salary:",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 15),
-              Text(
-                "USD ${predictedSalary.toStringAsFixed(2)}",
-                style: TextStyle(fontSize: 30, color: Colors.green[700]),
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                child: Text("Predict Again"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          ),
-        ),
       ),
     );
   }

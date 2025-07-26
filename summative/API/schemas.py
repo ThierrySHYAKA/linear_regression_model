@@ -11,6 +11,7 @@ class EducationLevel(str, Enum):
 class Gender(str, Enum):
     MALE = "Male"
     FEMALE = "Female"
+    OTHER = "Other"  # Added to match Flutter app
 
 class Location(str, Enum):
     URBAN = "Urban"
@@ -24,6 +25,8 @@ class JobTitle(str, Enum):
     ENGINEER = "Engineer"
     CONSULTANT = "Consultant"
     SPECIALIST = "Specialist"
+    DEVELOPER = "Developer"  # Added to match Flutter app
+    DESIGNER = "Designer"    # Added to match Flutter app
 
 class SalaryInput(BaseModel):
     name: str = Field(..., min_length=2, max_length=50, description="Person's full name")
@@ -31,7 +34,7 @@ class SalaryInput(BaseModel):
     years_of_experience: float = Field(..., ge=0, le=50, description="Years of experience (0-50)")
     location: Location = Field(..., description="Work location type")
     job_title: JobTitle = Field(..., description="Job title/position")
-    age: int = Field(..., ge=18, le=80, description="Age (18-80)")
+    age: int = Field(..., ge=18, le=100, description="Age (18-100)")  # Increased max age to match Flutter validation
     gender: Gender = Field(..., description="Gender")
     
     class Config:

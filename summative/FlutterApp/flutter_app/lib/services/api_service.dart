@@ -55,14 +55,17 @@ class SalaryPredictionResponse {
 }
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8000';
+  // For Android emulator, use 10.0.2.2 instead of localhost
+  // For iOS simulator, use localhost or 127.0.0.1
+  // For physical device, use your computer's IP address
+  static const String baseUrl = 'http://10.0.2.2:8000';
   
   static Future<Map<String, dynamic>> checkConnection() async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/'),
         headers: {'Content-Type': 'application/json'},
-      );
+      ).timeout(Duration(seconds: 10));
       
       if (response.statusCode == 200) {
         return json.decode(response.body);
@@ -79,7 +82,7 @@ class ApiService {
       final response = await http.get(
         Uri.parse('$baseUrl/health'),
         headers: {'Content-Type': 'application/json'},
-      );
+      ).timeout(Duration(seconds: 10));
       
       if (response.statusCode == 200) {
         return json.decode(response.body);
@@ -97,7 +100,7 @@ class ApiService {
         Uri.parse('$baseUrl/predict'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(request.toJson()),
-      );
+      ).timeout(Duration(seconds: 30));
       
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -119,7 +122,7 @@ class ApiService {
       final response = await http.get(
         Uri.parse('$baseUrl/model-info'),
         headers: {'Content-Type': 'application/json'},
-      );
+      ).timeout(Duration(seconds: 10));
       
       if (response.statusCode == 200) {
         return json.decode(response.body);
@@ -140,7 +143,7 @@ class ApiService {
       final response = await http.get(
         Uri.parse('$baseUrl/statistics'),
         headers: {'Content-Type': 'application/json'},
-      );
+      ).timeout(Duration(seconds: 10));
       
       if (response.statusCode == 200) {
         return json.decode(response.body);
@@ -161,7 +164,7 @@ class ApiService {
       final response = await http.get(
         Uri.parse('$baseUrl/history?limit=$limit'),
         headers: {'Content-Type': 'application/json'},
-      );
+      ).timeout(Duration(seconds: 10));
       
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
