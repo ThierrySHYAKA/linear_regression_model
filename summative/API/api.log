@@ -98,3 +98,24 @@
 2025-07-26 14:09:07,787 - ERROR - predict_salary:407 - \u274c SCALING ERROR: X has 6 features, but StandardScaler is expecting 1 features as input.
 2025-07-26 14:09:07,787 - ERROR - predict_salary:408 -    This is likely the '6 features vs 1 feature' error!
 2025-07-26 14:09:07,788 - ERROR - predict_salary:409 -    Please retrain your model with the updated notebook.
+2025-07-26 14:37:24,749 - INFO - <module>:209 - \U0001f680 Starting API server...
+2025-07-26 14:37:24,750 - INFO - load_model:64 - Starting model loading process...
+2025-07-26 14:37:24,750 - INFO - load_model:80 - Model file status:
+2025-07-26 14:37:24,750 - INFO - load_model:81 -   Primary model (model/model.pkl): \u2705 EXISTS
+2025-07-26 14:37:24,751 - INFO - load_model:82 -   Primary scaler (model/scaler.pkl): \u2705 EXISTS
+2025-07-26 14:37:24,751 - INFO - load_model:83 -   Metadata (model/metadata.json): \u2705 EXISTS
+2025-07-26 14:37:24,751 - INFO - load_model:90 - Metadata loaded: {'best_model': 'Random Forest', 'test_r2': 0.8441106894188826, 'test_mse': 127287761.80626884, 'features': ['Education_encoded', 'Experience', 'Location_encoded', 'Job_Title_encoded', 'Age', 'Gender_encoded'], 'n_features': 6, 'training_samples': 800, 'test_samples': 200}
+2025-07-26 14:37:26,336 - INFO - load_model:99 - \u2705 Model loaded successfully from model/model.pkl
+2025-07-26 14:37:26,336 - INFO - load_model:100 -    Model type: RandomForestRegressor
+2025-07-26 14:37:26,341 - INFO - load_model:130 - \u2705 Scaler loaded successfully from model/scaler.pkl
+2025-07-26 14:37:26,341 - INFO - load_model:135 -    Scaler expects 6 features
+2025-07-26 14:37:26,342 - INFO - load_model:141 - \u2705 Scaler feature count matches expected (6 features)
+2025-07-26 14:37:26,342 - INFO - load_model:187 - 
+==================================================
+2025-07-26 14:37:26,343 - INFO - load_model:188 - MODEL LOADING SUMMARY
+2025-07-26 14:37:26,343 - INFO - load_model:189 - ==================================================
+2025-07-26 14:37:26,343 - INFO - load_model:190 - Model loaded: \u2705 YES
+2025-07-26 14:37:26,345 - INFO - load_model:191 - Scaler loaded: \u2705 YES
+2025-07-26 14:37:26,345 - INFO - load_model:194 - \U0001f389 ALL COMPONENTS LOADED SUCCESSFULLY!
+2025-07-26 14:37:26,345 - INFO - load_model:200 - ==================================================
+2025-07-26 14:37:26,428 - INFO - <module>:570 - \U0001f680 Starting API server on http://0.0.0.0:8000
