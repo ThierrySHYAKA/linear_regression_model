@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'pages/salary_prediction_page.dart';
 
 void main() {
-  runApp(flutterapp());
+  runApp(SalaryPredictorApp());
 }
 
-class flutterapp extends StatelessWidget {
+class SalaryPredictorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Salary Predictor',
-      theme: ThemeData(primarySwatch: Colors.teal),
-      home: HomePage(),
+      title: 'AI Salary Predictor',
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Roboto',
+      ),
+      home: SalaryPredictionPage(),
       debugShowCheckedModeBanner: false,
     );
   }

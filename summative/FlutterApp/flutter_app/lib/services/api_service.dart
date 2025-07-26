@@ -2,12 +2,60 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class SalaryPredictionRequest {
+  final String name;
+  final String education;
+  final double yearsOfExperience;
+  final String location;
+  final String jobTitle;
+  final int age;
+  final String gender;
+
+  SalaryPredictionRequest({
+    required this.name,
+    required this.education,
+    required this.yearsOfExperience,
+    required this.location,
+    required this.jobTitle,
+    required this.age,
+    required this.gender,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'education': education,
+      'years_of_experience': yearsOfExperience,
+      'location': location,
+      'job_title': jobTitle,
+      'age': age,
+      'gender': gender,
+    };
+  }
+}
+
+class SalaryPredictionResponse {
+  final double predictedSalary;
+  final Map<String, dynamic> inputData;
+  final double? confidenceScore;
+
+  SalaryPredictionResponse({
+    required this.predictedSalary,
+    required this.inputData,
+    this.confidenceScore,
+  });
+
+  factory SalaryPredictionResponse.fromJson(Map<String, dynamic> json) {
+    return SalaryPredictionResponse(
+      predictedSalary: json['predicted_salary'].toDouble(),
+      inputData: json['input_data'],
+      confidenceScore: json['confidence_score']?.toDouble(),
+    );
+  }
+}
+
 class ApiService {
-  // Change this to your actual API URL
-  static const String baseUrl = 'http://localhost:8000';  // FastAPI default port
-  // For Android emulator: 'http://10.0.2.2:8000'
-  // For iOS simulator: 'http://localhost:8000'
-  // For real device: 'http://YOUR_COMPUTER_IP:8000'
+  static const String baseUrl = 'http://localhost:8000';
   
   static Future<Map<String, dynamic>> checkConnection() async {
     try {
@@ -43,21 +91,17 @@ class ApiService {
     }
   }
   
-  static Future<double> predictSalary({
-    required double yearsOfExperience,
-  }) async {
+  static Future<SalaryPredictionResponse> predictSalary(SalaryPredictionRequest request) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/predict'),
         headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'years_of_experience': yearsOfExperience,
-        }),
+        body: json.encode(request.toJson()),
       );
       
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return data['predicted_salary'].toDouble();
+        return SalaryPredictionResponse.fromJson(data);
       } else {
         final error = json.decode(response.body);
         throw Exception(error['detail'] ?? 'Prediction failed');
@@ -82,6 +126,49 @@ class ApiService {
       } else {
         final error = json.decode(response.body);
         throw Exception(error['detail'] ?? 'Failed to get model info');
+      }
+    } catch (e) {
+      if (e.toString().contains('Exception:')) {
+        rethrow;
+      }
+      throw Exception('Network error: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> getStatistics() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/statistics'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        final error = json.decode(response.body);
+        throw Exception(error['detail'] ?? 'Failed to get statistics');
+      }
+    } catch (e) {
+      if (e.toString().contains('Exception:')) {
+        rethrow;
+      }
+      throw Exception('Network error: $e');
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> getPredictionHistory({int limit = 10}) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/history?limit=$limit'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        return data.cast<Map<String, dynamic>>();
+      } else {
+        final error = json.decode(response.body);
+        throw Exception(error['detail'] ?? 'Failed to get history');
       }
     } catch (e) {
       if (e.toString().contains('Exception:')) {
