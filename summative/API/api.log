@@ -68,3 +68,33 @@
 2025-07-26 14:00:00,952 - ERROR - predict_salary:407 - \u274c SCALING ERROR: X has 6 features, but StandardScaler is expecting 1 features as input.
 2025-07-26 14:00:00,953 - ERROR - predict_salary:408 -    This is likely the '6 features vs 1 feature' error!
 2025-07-26 14:00:00,953 - ERROR - predict_salary:409 -    Please retrain your model with the updated notebook.
+2025-07-26 14:05:13,977 - INFO - <module>:209 - \U0001f680 Starting API server...
+2025-07-26 14:05:13,977 - INFO - load_model:64 - Starting model loading process...
+2025-07-26 14:05:13,977 - INFO - load_model:80 - Model file status:
+2025-07-26 14:05:13,977 - INFO - load_model:81 -   Primary model (model/model.pkl): \u2705 EXISTS
+2025-07-26 14:05:13,977 - INFO - load_model:82 -   Primary scaler (model/scaler.pkl): \u2705 EXISTS
+2025-07-26 14:05:13,977 - INFO - load_model:83 -   Metadata (model/metadata.json): \u274c MISSING
+2025-07-26 14:05:15,122 - INFO - load_model:99 - \u2705 Model loaded successfully from model/model.pkl
+2025-07-26 14:05:15,122 - INFO - load_model:100 -    Model type: RandomForestRegressor
+2025-07-26 14:05:15,123 - INFO - load_model:130 - \u2705 Scaler loaded successfully from model/scaler.pkl
+2025-07-26 14:05:15,123 - INFO - load_model:135 -    Scaler expects 1 features
+2025-07-26 14:05:15,124 - ERROR - load_model:137 - \u274c SCALER MISMATCH: Expected 6 features, got 1
+2025-07-26 14:05:15,124 - ERROR - load_model:138 -    This is likely the source of your error!
+2025-07-26 14:05:15,124 - ERROR - load_model:139 -    Please retrain your model with the updated notebook.
+2025-07-26 14:05:15,124 - INFO - load_model:187 - 
+==================================================
+2025-07-26 14:05:15,125 - INFO - load_model:188 - MODEL LOADING SUMMARY
+2025-07-26 14:05:15,125 - INFO - load_model:189 - ==================================================
+2025-07-26 14:05:15,125 - INFO - load_model:190 - Model loaded: \u2705 YES
+2025-07-26 14:05:15,126 - INFO - load_model:191 - Scaler loaded: \u2705 YES
+2025-07-26 14:05:15,126 - INFO - load_model:194 - \U0001f389 ALL COMPONENTS LOADED SUCCESSFULLY!
+2025-07-26 14:05:15,126 - INFO - load_model:200 - ==================================================
+2025-07-26 14:09:07,772 - INFO - predict_salary:380 - \U0001f50d Prediction request received for: John Doe 
+2025-07-26 14:09:07,775 - INFO - predict_salary:381 -    Input: Education=EducationLevel.BACHELOR, Experience=4.0, Location=Location.URBAN, Job=JobTitle.MANAGER, Age=30, Gender=Gender.MALE
+2025-07-26 14:09:07,776 - INFO - predict_salary:391 - \U0001f916 Using actual model for prediction
+2025-07-26 14:09:07,780 - INFO - predict_salary:395 -    Encoded features shape: (1, 6)
+2025-07-26 14:09:07,781 - INFO - predict_salary:396 -    Encoded features: [ 1.  4.  2.  4. 30.  1.]
+2025-07-26 14:09:07,781 - INFO - predict_salary:400 - \U0001f504 Scaling features...
+2025-07-26 14:09:07,787 - ERROR - predict_salary:407 - \u274c SCALING ERROR: X has 6 features, but StandardScaler is expecting 1 features as input.
+2025-07-26 14:09:07,787 - ERROR - predict_salary:408 -    This is likely the '6 features vs 1 feature' error!
+2025-07-26 14:09:07,788 - ERROR - predict_salary:409 -    Please retrain your model with the updated notebook.
