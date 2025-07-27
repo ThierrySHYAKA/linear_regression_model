@@ -30,7 +30,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 ### 4. Flutter App Setup
-Navigate to Flutter directory
+Navigate to the Flutter directory
 cd Flutter_app
 
 ### 5. Install dependencies
@@ -52,9 +52,11 @@ flutter run
 venv\Scripts\activate
 ## Mac/Linux:
 source venv/bin/activate
+
 ### 7. Install backend dependencies
 Install the required dependencies for the FastAPI backend:
 pip install -r requirements.txt
+
 ### 8. Run the FastAPI server
 Start the FastAPI server by running the following command:
 python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
@@ -65,12 +67,17 @@ Follow the official installation guide for Flutter: Flutter Installation.
 ### 10. Clone the repository
 If you haven't already, clone the repository for the Flutter frontend:
 git clone https://github.com/ThierrySHYAKA/linear_regression_model.git
-cd linear_regression_model
+
+$cd linear_regression_model/summative/API
+$cd linear_regression_model/summative/FlutterApp/flutter_app
+$cd linear_regression_model/summative/linear_regression
+
 ### 11. Install Flutter dependencies
 Install the required dependencies for the Flutter app:
 flutter pub get
+
 ### 12. Update the API URL in main.dart
-Make sure the API URL in the main.dart file points to the correct address of your FastAPI backend
+Make sure the API URL is in the main.dart file points to the correct address of your FastAPI backend
 
 ### 13. Run the Flutter app
 Run the Flutter app on an emulator or connected device:
