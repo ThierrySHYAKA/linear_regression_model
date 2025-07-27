@@ -301,3 +301,25 @@
 2025-07-27 23:22:59,685 - INFO - load_model:194 - \U0001f389 ALL COMPONENTS LOADED SUCCESSFULLY!
 2025-07-27 23:22:59,687 - INFO - load_model:200 - ==================================================
 2025-07-27 23:23:00,203 - INFO - <module>:570 - \U0001f680 Starting API server on http://0.0.0.0:8000
+2025-07-27 23:27:17,946 - INFO - predict_salary:380 - \U0001f50d Prediction request received for: Thierry SHYAKA
+2025-07-27 23:27:17,951 - INFO - predict_salary:381 -    Input: Education=EducationLevel.BACHELOR, Experience=3.0, Location=Location.URBAN, Job=JobTitle.DEVELOPER, Age=23, Gender=Gender.MALE
+2025-07-27 23:27:17,951 - INFO - predict_salary:391 - \U0001f916 Using actual model for prediction
+2025-07-27 23:27:17,954 - INFO - predict_salary:395 -    Encoded features shape: (1, 6)
+2025-07-27 23:27:17,957 - INFO - predict_salary:396 -    Encoded features: [ 1.  3.  2.  3. 23.  1.]
+2025-07-27 23:27:17,958 - INFO - predict_salary:400 - \U0001f504 Scaling features...
+2025-07-27 23:27:18,028 - INFO - predict_salary:403 -    Scaled features shape: (1, 6)
+2025-07-27 23:27:18,029 - INFO - predict_salary:404 -    Scaling successful \u2705
+2025-07-27 23:27:18,029 - INFO - predict_salary:419 - \U0001f3af Making prediction...
+2025-07-27 23:27:18,058 - INFO - predict_salary:423 -    Prediction successful: $88,830.11
+2025-07-27 23:27:18,064 - INFO - predict_salary:445 - \u2705 Prediction completed: Thierry SHYAKA -> $88,830.11 (confidence: 0.834)
+2025-07-27 23:46:12,985 - INFO - predict_salary:380 - \U0001f50d Prediction request received for: John Doe
+2025-07-27 23:46:12,998 - INFO - predict_salary:381 -    Input: Education=EducationLevel.BACHELOR, Experience=5.5, Location=Location.URBAN, Job=JobTitle.MANAGER, Age=25, Gender=Gender.MALE
+2025-07-27 23:46:13,001 - INFO - predict_salary:391 - \U0001f916 Using actual model for prediction
+2025-07-27 23:46:13,059 - INFO - predict_salary:395 -    Encoded features shape: (1, 6)
+2025-07-27 23:46:13,060 - INFO - predict_salary:396 -    Encoded features: [ 1.   5.5  2.   4.  25.   1. ]
+2025-07-27 23:46:13,061 - INFO - predict_salary:400 - \U0001f504 Scaling features...
+2025-07-27 23:46:13,096 - INFO - predict_salary:403 -    Scaled features shape: (1, 6)
+2025-07-27 23:46:13,098 - INFO - predict_salary:404 -    Scaling successful \u2705
+2025-07-27 23:46:13,098 - INFO - predict_salary:419 - \U0001f3af Making prediction...
+2025-07-27 23:46:13,228 - INFO - predict_salary:423 -    Prediction successful: $92,107.00
+2025-07-27 23:46:13,244 - INFO - predict_salary:445 - \u2705 Prediction completed: John Doe -> $92,107.00 (confidence: 0.877)
