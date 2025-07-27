@@ -184,3 +184,35 @@
 2025-07-26 16:17:29,788 - INFO - predict_salary:419 - \U0001f3af Making prediction...
 2025-07-26 16:17:29,795 - INFO - predict_salary:423 -    Prediction successful: $109,969.70
 2025-07-26 16:17:29,799 - INFO - predict_salary:445 - \u2705 Prediction completed: John Eric -> $109,969.70 (confidence: 0.860)
+2025-07-27 11:40:50,731 - INFO - <module>:209 - \U0001f680 Starting API server...
+2025-07-27 11:40:50,739 - INFO - load_model:64 - Starting model loading process...
+2025-07-27 11:40:50,741 - INFO - load_model:80 - Model file status:
+2025-07-27 11:40:50,741 - INFO - load_model:81 -   Primary model (model/model.pkl): \u2705 EXISTS
+2025-07-27 11:40:50,742 - INFO - load_model:82 -   Primary scaler (model/scaler.pkl): \u2705 EXISTS
+2025-07-27 11:40:50,743 - INFO - load_model:83 -   Metadata (model/metadata.json): \u2705 EXISTS
+2025-07-27 11:40:50,780 - INFO - load_model:90 - Metadata loaded: {'best_model': 'Random Forest', 'test_r2': 0.8441106894188826, 'test_mse': 127287761.80626884, 'features': ['Education_encoded', 'Experience', 'Location_encoded', 'Job_Title_encoded', 'Age', 'Gender_encoded'], 'n_features': 6, 'training_samples': 800, 'test_samples': 200}
+2025-07-27 11:40:52,719 - INFO - load_model:99 - \u2705 Model loaded successfully from model/model.pkl
+2025-07-27 11:40:52,719 - INFO - load_model:100 -    Model type: RandomForestRegressor
+2025-07-27 11:40:52,736 - INFO - load_model:130 - \u2705 Scaler loaded successfully from model/scaler.pkl
+2025-07-27 11:40:52,737 - INFO - load_model:135 -    Scaler expects 6 features
+2025-07-27 11:40:52,738 - INFO - load_model:141 - \u2705 Scaler feature count matches expected (6 features)
+2025-07-27 11:40:52,738 - INFO - load_model:187 - 
+==================================================
+2025-07-27 11:40:52,739 - INFO - load_model:188 - MODEL LOADING SUMMARY
+2025-07-27 11:40:52,740 - INFO - load_model:189 - ==================================================
+2025-07-27 11:40:52,741 - INFO - load_model:190 - Model loaded: \u2705 YES
+2025-07-27 11:40:52,742 - INFO - load_model:191 - Scaler loaded: \u2705 YES
+2025-07-27 11:40:52,743 - INFO - load_model:194 - \U0001f389 ALL COMPONENTS LOADED SUCCESSFULLY!
+2025-07-27 11:40:52,744 - INFO - load_model:200 - ==================================================
+2025-07-27 11:40:53,922 - INFO - <module>:570 - \U0001f680 Starting API server on http://0.0.0.0:8000
+2025-07-27 12:01:08,132 - INFO - predict_salary:380 - \U0001f50d Prediction request received for: John Bosco
+2025-07-27 12:01:08,142 - INFO - predict_salary:381 -    Input: Education=EducationLevel.BACHELOR, Experience=2.0, Location=Location.RURAL, Job=JobTitle.DEVELOPER, Age=25, Gender=Gender.MALE
+2025-07-27 12:01:08,146 - INFO - predict_salary:391 - \U0001f916 Using actual model for prediction
+2025-07-27 12:01:08,169 - INFO - predict_salary:395 -    Encoded features shape: (1, 6)
+2025-07-27 12:01:08,171 - INFO - predict_salary:396 -    Encoded features: [ 1.  2.  0.  3. 25.  1.]
+2025-07-27 12:01:08,173 - INFO - predict_salary:400 - \U0001f504 Scaling features...
+2025-07-27 12:01:08,290 - INFO - predict_salary:403 -    Scaled features shape: (1, 6)
+2025-07-27 12:01:08,292 - INFO - predict_salary:404 -    Scaling successful \u2705
+2025-07-27 12:01:08,293 - INFO - predict_salary:419 - \U0001f3af Making prediction...
+2025-07-27 12:01:08,346 - INFO - predict_salary:423 -    Prediction successful: $63,800.37
+2025-07-27 12:01:08,360 - INFO - predict_salary:445 - \u2705 Prediction completed: John Bosco -> $63,800.37 (confidence: 0.853)
